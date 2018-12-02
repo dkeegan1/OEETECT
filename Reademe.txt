@@ -1,0 +1,10 @@
+ 
+Update 02/12/2018
+
+Database is set up on robo and is taking in all relevant data as strings
+MongoDb working coreectly
+Nodejs + express working properly
+
+Database is able to insert, store, update and delete data.
+
+Entry webpage needs to updated... links need to be inserted.
