@@ -1,0 +1,191 @@
+<h1>OEE TECT</h1>
+<section class="insert">
+  <h3>Insert Data</h3>
+  <form action="/insert" method="post">
+
+  <div class="input">
+    <label for="event">Event</label>
+    <input list="events" name="event">
+    <datalist id="events">
+      <option value="CIP">
+      <option value="List Change">
+      <option value="Mechanical">
+      <option value="Trial">
+      <option value="Schedualed Downtime">
+    </datalist>
+  </div>
+
+  <div class="input">
+    <label for="startdate">Start Date</label>
+    <input type="date" id="startdate" name="startdate">
+  </div>
+
+  <div class="input">
+      <label for="starttime">Start Time</label>
+      <input type="time" id="starttime" name="starttime">
+  </div>
+
+  <div class="input">
+    <label for="enddate">End Date</label>
+    <input type="date" id="enddate" name="enddate">
+  </div>
+
+  <div class="input">
+    <label for="endtime">End Time</label>
+    <input type="time" id="endtime" name="endtime">
+  </div>
+
+  <div class="input">
+    <label for="duration">Duration</label>
+    <input type="text" id="duration" name="duration" autocomplete="off">
+  </div>
+
+  <div class="input">
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" autocomplete="off">
+  </div>
+
+  <div class="input">
+    <label for="author">Author</label>
+    <input list="authors" name="author" autocomplete="off">
+      <datalist id="authors">
+        <option value="DK">
+        <option value="AC">
+        <option value="JPC">
+        <option value="KQ">
+        <option value="AM">
+        <option value="JR">
+      </datalist>
+  </div>
+
+  <div class="input">
+    <label for="dateentered">Date Entered</label>
+    <input type="date" id="dateentered" name="dateentered">
+  </div>
+  <button type="submit"onclick="alert('Entry Sucessful')">INSERT</button>
+  </form>
+</section>
+
+<section class="get">
+    <h3>Get Data</h3>
+    <!-- <a href="/get-data">LOAD DATA</a>  insert button here -->
+    <form action="/get-data" method="get">
+    <button type="submit"> LOAD DATA</button>
+
+      {{# each items }}
+       <article class="item">
+      <table>
+      <tr>
+        <th>ID</th>
+        <th>Event</th>
+	      <th>Start Date</th>
+	      <th>Start Time</th>
+        <th>End Date</th>
+        <th>End Time</th>
+	      <th>Duration</th>
+        <th>Description</th>
+	      <th>Author</th>
+        <th>Date Entered </th>
+     </tr>
+     <tr>
+       <td>{{ this._id }}</td>
+       <td>{{ this.event }}</td>
+       <td>{{ this.startdate }}</td>
+	     <td>{{ this.starttime }}</td>
+	     <td>{{ this.enddate }}</td>
+	     <td>{{ this.endtime }}</td>
+	     <td>{{ this.duration }} </td>
+	     <td>{{ this.description }}</td>
+       <td>{{ this.author }}</td>
+	     <td>{{ this.dateentered }}</td>
+    </tr>
+    </table>
+    </article>
+    {{/each}}
+  </div>
+</section>
+
+<section class="update">
+    <h3>Update Data</h3>
+    <form action="/update" method="post">
+
+    <div class="input">
+      <label for="id">ID</label>
+      <input type="text" id="id" name="id" autocomplete="off">
+    </div>
+
+    <div class="input">
+      <label for="event">Event</label>
+      <input list="events" name="event">
+      <datalist id="events">
+        <option value="CIP">
+        <option value="List Change">
+        <option value="Mechanical">
+        <option value="Trial">
+        <option value="Schedualed Downtime">
+      </datalist>
+    </div>
+
+    <div class="input">
+      <label for="startdate">Start Date</label>
+      <input type="date" id="startdate" name="startdate">
+    </div>
+
+    <div class="input">
+      <label for="starttime">Start Time</label>
+      <input type="time" id="starttime" name="starttime">
+    </div>
+
+    <div class="input">
+      <label for="enddate">End Date</label>
+      <input type="date" id="enddate" name="enddate">
+    </div>
+
+    <div class="input">
+      <label for="endtime">End Time</label>
+      <input type="time" id="endtime" name="endtime">
+    </div>
+
+    <div class="input">
+      <label for="duration">Duration</label>
+      <input type="text" id="duration" name="duration" autocomplete="off">
+    </div>
+
+    <div class="input">
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description"  autocomplete="off">
+    </div>
+
+    <div class="input">
+      <label for="author">Author</label>
+      <!--  <input type="text" id="author" name="author">-->
+      <input list="authors" name="author" autocomplete="off">
+        <datalist id="authors">
+          <option value="DK">
+          <option value="AC">
+          <option value="JPC">
+          <option value="KQ">
+          <option value="AM">
+          <option value="JR">
+        </datalist>
+    </div>
+
+   <div class="input">
+     <label for="dateentered">Date Entered</label>
+     <input type="date" id="dateentered" name="dateentered">
+  </div>
+  <button type="submit">UPDATE</button>
+  </form>
+</section>
+</section>
+
+<section class="delete">
+  <h3>Delete Data</h3>
+    <form action="/delete" method="post">
+      <div class="input">
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" autocomplete="off">
+      </div>
+      <button type="submit" onclick="alert('Entry Deleted')"> DELETE</button>
+    </form>
+</section>
