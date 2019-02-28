@@ -1,0 +1,86 @@
+table
+{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th
+{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even)
+{
+    background-color: #dddddd;
+}
+
+p2
+{
+ color: #6699ff;
+   font-family: verdana;
+   font-size: 100%;
+   font-style: italic;
+}
+
+h1
+{
+  color: #6699ff;
+    font-family: verdana;
+    font-size: 400%;
+    font-style: italic;
+	text-align:center;
+}
+h4
+{
+  	color: #6699ff;
+      font-family: verdana;
+      font-size: 170%;
+      font-style: italic;
+  	  text-align:center;
+}
+body
+{
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 120%;
+}
+
+input
+{
+
+    font-size: 100%;
+    width: 50%;
+    padding: 12px 20px;
+    margin: 12px 0;
+    display: inline-block;
+    border: 1px solid #1a1a1a;
+    box-sizing: border-box;
+}
+.input label {
+  display: block;
+  font-weight: bold;
+  padding: 2px 0;
+}
+
+button
+{
+    background-color: #6699ff;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+}
+
+button:hover
+{
+    opacity: 0.8;
+}
+
+.container
+{
+    padding: 16px;
+}
