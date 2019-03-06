@@ -58,6 +58,7 @@ input
     border: 1px solid #1a1a1a;
     box-sizing: border-box;
 }
+
 .input label {
   display: block;
   font-weight: bold;

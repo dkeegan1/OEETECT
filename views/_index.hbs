@@ -1,0 +1,79 @@
+<h1>OEE TECT</h1>
+<section class="insert">
+  <h3>Insert Data</h3>
+  <form action="/insert" method="post">
+
+  <div class="input">
+    <label for="event">Event</label>
+    <input list="events" name="event">
+    <datalist id="events">
+      <option value="CIP">
+      <option value="List Change">
+      <option value="Mechanical">
+      <option value="Trial">
+      <option value="Schedualed Downtime">
+    </datalist>
+  </div>
+
+  <div class="input">
+    <label for="startdate">Start Date</label>
+    <input type="date" id="startdate" name="startdate">
+  </div>
+
+  <div class="input">
+      <label for="starttime">Start Time</label>
+      <input type="time" id="starttime" name="starttime">
+  </div>
+
+  <div class="input">
+    <label for="enddate">End Date</label>
+    <input type="date" id="enddate" name="enddate">
+  </div>
+
+  <div class="input">
+    <label for="endtime">End Time</label>
+    <input type="time" id="endtime" name="endtime">
+  </div>
+
+  <div class="input">
+    <label for="duration">Duration</label>
+    <input type="text" id="duration" name="duration" autocomplete="off">
+  </div>
+
+  <div class="input">
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" autocomplete="off">
+  </div>
+
+  <div class="input">
+    <label for="author">Author</label>
+    <input list="authors" name="author" autocomplete="off">
+      <datalist id="authors">
+        <option value="DK">
+        <option value="AC">
+        <option value="JPC">
+        <option value="KQ">
+        <option value="AM">
+        <option value="JR">
+      </datalist>
+  </div>
+
+  <div class="input">
+    <label for="date">Date Entered</label>
+    <input id="date"  name="date">
+  </div>
+
+ <script>
+ var d  = new Date();
+    document.getElementById("date").innerHTML;
+  </script>
+
+
+  <button type="submit"onclick="alert('Entry Sucessful')">INSERT</button>
+  </form>
+</section>
+
+
+<form action="/get-data" method="get">
+<button type="submit"> LOAD DATA</button>
+<!-- Get Data was here -->
