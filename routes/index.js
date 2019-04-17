@@ -1,23 +1,32 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var addSubtractDate = require("add-subtract-date");
 mongoose.connect('localhost:27017/test');
 var Schema = mongoose.Schema;
+var test;
+
+/*var d = new Date(2018, 11, 20);
+var f = new Date(2019, 11, 20);
+console.log(addSubtractDate.subtract(d,f,"minutes"));*/
 
 var userDataSchema = new Schema({
   event: {type: String, required: true},
   startdate: String,
-  starttime: String,
   enddate : String,
-  endtime : String,
-  duration : Number,
+  duration: Number,
   description : String,
   author : String,
   date : String
-
-}, {collection: 'user-data'});
+});
+//, {collection: 'UserData'}
+//test.UserData.aggregate([{$project: {duration: {$subtract:["$enddate","$startdate" ]}}}])
 
 var UserData = mongoose.model('UserData', userDataSchema);
+var UserData = mongoose.model('UserData', userDataSchema);
+var UserData = mongoose.model('UserData', userDataSchema);
+var UserData = mongoose.model('UserData', userDataSchema);
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) { //Login Page
@@ -29,7 +38,6 @@ router.get('/Welcome', function(req, res, next) { //welcome Page have to do this
 router.get('/enter', function(req, res, next) { //Insert Page
   res.render('_index');
 });
-
 router.get('/get-data', function(req, res, next) { //Get Data Page
   UserData.find()
       .then(function(doc) {
@@ -41,9 +49,7 @@ router.post('/insert', function(req, res, next) {
   var item = {
     event : req.body.event,
     startdate : req.body.startdate,
-    starttime : req.body.starttime,
     enddate: req.body.enddate,
-    endtime : req.body.endtime,
     duration : req.body.duration,
     description :req.body.description,
     author : req.body.author,
@@ -66,9 +72,9 @@ router.post('/update', function(req, res, next) {
     }
     doc.event = req.body.event;
     doc.startdate = req.body.startdate;
-    doc.starttime = req.body.starttime;
+    //doc.starttime = req.body.starttime;
     doc.enddate= req.body.enddate;
-    doc.endtime = req.body.endtime;
+    //doc.endtime = req.body.endtime;
     doc.duration = req.body.duration;
     doc.description = req.body.description;
     doc.author = req.body.author;
