@@ -1,0 +1,50 @@
+<h1>OEE TECT</h1>
+<form action="/Welcome" method="get">
+<button type="submit"> HOME</button>
+</form>
+
+
+
+<section class="get">
+    <h3>Display data from database </h3>
+    <form action="/getE1" method="get">
+      <table>
+      <tr>
+        <th>ID</th>
+        <th>Event</th>
+	      <th>Start Date</th>
+        <th>End Date</th>
+	      <th>Duration</th>
+        <th>Description</th>
+	      <th>Author</th>
+        <th>Date Entered </th>
+     </tr>
+      {{# each items }}
+       <article class="item">
+     <tr>
+       <td>{{ this._id }}</td>
+       <td>{{ this.event }}</td>
+       <td>{{ this.startdate }}</td>
+	     <td>{{ this.enddate }}</td>
+	     <td>{{ this.duration }} </td>
+	     <td>{{ this.description }}</td>
+       <td>{{ this.author }}</td>
+	     <td>{{ this.date }}</td>
+    </tr>
+    </article>
+    {{/each}}
+    </table>
+  </div>
+</form>
+</section>
+</section>
+<section class="delete">
+  <h3>Delete Data</h3>
+    <form action="/delete" method="post">
+      <div class="input">
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" autocomplete="off">
+      </div>
+      <button type="submit" onclick="alert('Entry Deleted')"> DELETE</button>
+    </form>
+</section>

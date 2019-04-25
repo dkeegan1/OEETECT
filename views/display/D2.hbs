@@ -3,47 +3,34 @@
 <button type="submit"> HOME</button>
 </form>
 
-<form action="/enter" method="get">
-<button type="submit"> Insert</button>
-</form>
+
 
 <section class="get">
     <h3>Display data from database </h3>
-
-    <form action="/get-data" method="get">
+    <form action="/getD2" method="get">
       <table>
       <tr>
         <th>ID</th>
         <th>Event</th>
 	      <th>Start Date</th>
-	     <!-- <th>Start Time</th> -->
         <th>End Date</th>
-        <!--<th>End Time</th> -->
 	      <th>Duration</th>
         <th>Description</th>
 	      <th>Author</th>
         <th>Date Entered </th>
      </tr>
-
-
       {{# each items }}
        <article class="item">
-
-
      <tr>
        <td>{{ this._id }}</td>
        <td>{{ this.event }}</td>
        <td>{{ this.startdate }}</td>
-	    <!-- <td>{{ this.starttime }}</td> -->
 	     <td>{{ this.enddate }}</td>
-	    <!-- <td>{{ this.endtime }}</td> -->
 	     <td>{{ this.duration }} </td>
 	     <td>{{ this.description }}</td>
        <td>{{ this.author }}</td>
 	     <td>{{ this.date }}</td>
     </tr>
-
-
     </article>
     {{/each}}
     </table>
@@ -51,7 +38,6 @@
 </form>
 </section>
 </section>
-
 <section class="delete">
   <h3>Delete Data</h3>
     <form action="/delete" method="post">

@@ -1,51 +1,107 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var mongodb = require('mongodb');
 var addSubtractDate = require("add-subtract-date");
 mongoose.connect('localhost:27017/test');
 var Schema = mongoose.Schema;
-var test;
+var assert = require('assert');
+//var result =3;
 
-/*var d = new Date(2018, 11, 20);
-var f = new Date(2019, 11, 20);
-console.log(addSubtractDate.subtract(d,f,"minutes"));*/
+var MongoClient = mongodb.MongoClient;
+var url = 'mongodb://localhost:27017/test';
+MongoClient.connect(url, (err, db) => {
+    assert.equal(null, err);
+    sumDuration(db, () => {
+        db.close();
+    });
+});
+var sumDuration = (db, callback) => {
+ //var OEE = [ { $project:{_id:0, OEE:{$trunc:[ {$multiply:[{$divide:[{$sum:[ "$duration"] },10080]},100]}]}}}];
+  var agr = [{$match: {} },{$group: {_id:0, total: {$sum: "$duration"}}}];// adds all the duration
+  var Mechanical = [{ $match: {$or: [ { event: "Mechanical" }] }},{ $group: {_id: "Mechanical", total: {$sum: "$duration" } }}]; //adds all Mechanical
+  var CIP = [{ $match: {$or: [{ event: "CIP" }] }},{ $group: {_id: "CIP", total: { $sum: "$duration" } }}];//adds all cips
+  var List = [{ $match: {$or: [{ event: "List Change" }] }},{ $group: {_id: "List Change", total: { $sum: "$duration" } }}]; //adds all list changes
+ //result = 3;
+    var cursor = db.collection('dryer1').aggregate(agr).toArray( (err, res) => { //jason object
+       assert.equal(err, null);
+       console.log("DURATION CALCULATIONS");
+       console.log(res);
+       result  = res;
+       router.get('/Welcome', function(req, res, next) { //welcome Page have to do this one yet
+             console.log(result);
+             res.render('Wel', {result: my_obj_str});
+       });
+    });
+  };
+//var db.getCollection('dryer1').aggregate(
+//[{$match: {} },{$group: {_id:"event", total: {$sum: "$duration"}}}])
 
 var userDataSchema = new Schema({
   event: {type: String, required: true},
   startdate: String,
   enddate : String,
-  duration: Number,
+  duration: String,
   description : String,
   author : String,
   date : String
 });
 //, {collection: 'UserData'}
-//test.UserData.aggregate([{$project: {duration: {$subtract:["$enddate","$startdate" ]}}}])
-
-var UserData = mongoose.model('UserData', userDataSchema);
-var UserData = mongoose.model('UserData', userDataSchema);
-var UserData = mongoose.model('UserData', userDataSchema);
-var UserData = mongoose.model('UserData', userDataSchema);
-
+var Dryer1 = mongoose.model('Dryer1', userDataSchema);
+var Dryer2 = mongoose.model('Dryer2', userDataSchema);
+var Evap1 = mongoose.model('Evapartor1', userDataSchema);
+var Evap2 = mongoose.model('Evapartor2', userDataSchema);
 
 /* GET home page. */
 router.get('/', function(req, res, next) { //Login Page
   res.render('index');
 });
-router.get('/Welcome', function(req, res, next) { //welcome Page have to do this one yet
-  res.render('Wel');
+/*router.get('/Welcome', function(req, res, next) { //welcome Page have to do this one yet
+      console.log(arg);
+      res.render('Wel', {result: arg});
+
+});*/
+router.get('/enterD1', function(req, res, next) {
+   //Insert Page
+  res.render('insert/Dryer1');
 });
-router.get('/enter', function(req, res, next) { //Insert Page
-  res.render('_index');
+router.get('/enterD2', function(req, res, next) { //Insert Page
+  res.render('insert/Dryer2');
 });
-router.get('/get-data', function(req, res, next) { //Get Data Page
-  UserData.find()
+router.get('/enterE1', function(req, res, next) { //Insert Page
+  res.render('insert/Evap1');
+});
+router.get('/enterE2', function(req, res, next) { //Insert Page
+  res.render('insert/Evap2');
+});
+router.get('/getD1', function(req, res, next) { //Get Data Page
+  Dryer1.find()
       .then(function(doc) {
-        res.render('home', {items: doc});
+        res.render('display/D1', {items: doc});
       });
 });
+router.get('/getD2', function(req, res, next) { //Get Data Page
+  Dryer2.find()
+      .then(function(doc) {
+        res.render('display/D2', {items: doc});
+      });
+    });
 
-router.post('/insert', function(req, res, next) {
+router.get('/getE1', function(req, res, next) { //Get Data Page
+  Evap1.find()
+      .then(function(doc) {
+        res.render('display/E1', {items: doc});
+      });
+    });
+
+router.get('/getE2', function(req, res, next) { //Get Data Page
+  Evap2.find()
+      .then(function(doc) {
+        res.render('display/E2', {items: doc});
+      });
+    });
+
+router.post('/insertD1', function(req, res, next) {
   var item = {
     event : req.body.event,
     startdate : req.body.startdate,
@@ -54,39 +110,60 @@ router.post('/insert', function(req, res, next) {
     description :req.body.description,
     author : req.body.author,
     date : req.body.date
-
   };
-
-  var data = new UserData(item);
+  var data = new Dryer1(item);
   data.save();
-
   res.redirect('/Welcome');
 });
-
-router.post('/update', function(req, res, next) {
-  var id = req.body.id;
-
-  UserData.findById(id, function(err, doc) {
-    if (err) {
-      console.error('error, no entry found');
-    }
-    doc.event = req.body.event;
-    doc.startdate = req.body.startdate;
-    //doc.starttime = req.body.starttime;
-    doc.enddate= req.body.enddate;
-    //doc.endtime = req.body.endtime;
-    doc.duration = req.body.duration;
-    doc.description = req.body.description;
-    doc.author = req.body.author;
-    doc.date = req.body.date;
-    doc.save();
-  })
+router.post('/insertD2', function(req, res, next) {
+  var item = {
+    event : req.body.event,
+    startdate : req.body.startdate,
+    enddate: req.body.enddate,
+    duration : req.body.duration,
+    description :req.body.description,
+    author : req.body.author,
+    date : req.body.date
+  };
+  var data = new Dryer2(item);
+  data.save();
+  res.redirect('/Welcome');
+});
+router.post('/insertE1', function(req, res, next) {
+  var item = {
+    event : req.body.event,
+    startdate : req.body.startdate,
+    enddate: req.body.enddate,
+    duration : req.body.duration,
+    description :req.body.description,
+    author : req.body.author,
+    date : req.body.date
+  };
+  var data = new Evap1(item);
+  data.save();
+  res.redirect('/Welcome');
+});
+router.post('/insertE2', function(req, res, next) {
+  var item = {
+    event : req.body.event,
+    startdate : req.body.startdate,
+    enddate: req.body.enddate,
+    duration : req.body.duration,
+    description :req.body.description,
+    author : req.body.author,
+    date : req.body.date
+  };
+  var data = new Evap2(item);
+  data.save();
   res.redirect('/Welcome');
 });
 
 router.post('/delete', function(req, res, next) {
   var id = req.body.id;
-  UserData.findByIdAndRemove(id).exec();
+  Dryer1.findByIdAndRemove(id).exec();
+  Dryer2.findByIdAndRemove(id).exec();
+  Evap1.findByIdAndRemove(id).exec();
+  Evap2.findByIdAndRemove(id).exec();
   res.redirect('/Welcome');
 });
 

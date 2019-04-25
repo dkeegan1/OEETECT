@@ -1,0 +1,70 @@
+
+<meta charset="UTF-8">
+<h1>OEE TECT</h1>
+<section class="insert">
+  <h3>Insert Data</h3>
+  <form action="/insertD1" method="post">
+
+  <div class="input">
+    <label for="event">Event</label>
+    <input list="events" name="event">
+    <datalist id="events">
+      <option value="CIP">
+      <option value="List Change">
+      <option value="Mechanical">
+      <option value="Trial">
+      <option value="Schedualed Downtime">
+    </datalist>
+  </div>
+
+  <div class="input">
+    <label for="startdate">Start Date</label>
+    <input type="datetime-local" id="startdate" name="startdate">
+
+    <label for="enddate">End Date</label>
+    <input type="datetime-local" id="enddate" name="enddate">
+
+    <label for="duration">Duration</label>
+    <input id="duration" name="duration">
+
+    <script type="text/javascript">
+      function myFunction() {
+      var d = Date.parse(document.getElementById('startdate').value);
+      var d1 = Date.parse(document.getElementById('enddate').value);
+      document.getElementById("duration").value =((d1-d)/1000/60);
+    }
+    </script>
+  </div>
+
+  <div class="input">
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" autocomplete="off">
+  </div>
+
+  <div class="input">
+    <label for="author">Author</label>
+    <input list="authors" name="author" autocomplete="off">
+      <datalist id="authors">
+        <option value="DK">
+        <option value="AC">
+        <option value="JPC">
+        <option value="KQ">
+        <option value="AM">
+        <option value="JR">
+      </datalist>
+  </div>
+
+  <div class="input">
+    <label for="date">Date Entered</label>
+    <input  type="text/javascript" id="date" name="date">
+    <script type="text/javascript">
+      var d = new Date();
+      document.getElementById('date').value = d.toDateString();
+    </script>
+  </div>
+  <button type="submit" onclick="myFunction()" onclick="alert('Entry Sucessful')">INSERT</button>
+  </form>
+</section>
+<form action="/get-data" method="get">
+<button type="submit"> LOAD DATA</button>
+<!-- Get Data was here -->
