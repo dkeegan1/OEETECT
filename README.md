@@ -1,7 +1,5 @@
 # OEETECT
 Update 26/04/2019
- All Database tables can now be exported to excel files.
 
-User can sign up and register account.
-Validations Inserted.
-User must have valid email and password min 4 characters.
+Aggregation results are now stored in a collection called results.
+Collection is then called and is displayed on webpage.

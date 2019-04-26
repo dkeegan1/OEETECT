@@ -9,7 +9,6 @@ mongoose.connect('localhost:27017/test');
 var Schema = mongoose.Schema;
 var assert = require('assert');
 var passport = require('passport');
-//var result =3;
 
 
 var MongoClient = mongodb.MongoClient;
@@ -23,7 +22,7 @@ MongoClient.connect(url, (err, db) => {
 var sumDuration = (db, callback) => {
  //var OEE = [ { $project:{_id:0, OEE:{$trunc:[ {$multiply:[{$divide:[{$sum:[ "$duration"] },10080]},100]}]}}}];
  //,{ $out : "Results" }
-  var agr = [{$group: { total: {$sum: "$duration"},_id:"Total Duration"}}];// adds all the duration and creates collection Results
+  var agr = [{$group: { total: {$sum: "$duration"},_id:"Total Duration"}},{ $out : "Results" }];// adds all the duration and creates collection Results
   var Mechanical = [{ $match: {$or: [ { event: "Mechanical" }] }},{ $group: {_id: "Mechanical", total: {$sum: "$duration" } }}]; //adds all Mechanical
   var CIP = [{ $match: {$or: [{ event: "CIP" }] }},{ $group: {_id: "CIP", total: { $sum: "$duration" } }}];//adds all cips
   var List = [{ $match: {$or: [{ event: "List Change" }] }},{ $group: {_id: "List Change", total: { $sum: "$duration" } }}]; //adds all list changes
@@ -31,21 +30,23 @@ var sumDuration = (db, callback) => {
     var cursor = db.collection('dryer1').aggregate(agr).toArray( (err, res) => { //jason object
        assert.equal(err, null);
        console.log("DURATION CALCULATIONS");
-
-      result  = res;
-       var myJSON = JSON.stringify(result);
-
-       router.get('/graph', function(req, res, next) { //welcome Page have to do this one yet
-            // console.log(result);
-             //res.render('D1graph', {result:JSON.parse(result)
-              res.render('D1graph', {result: myJSON
-       });
-    });
   });
 }
 
-//var db.getCollection('dryer1').aggregate(
-//[{$match: {} },{$group: {_id:"event", total: {$sum: "$duration"}}}])
+router.get('/graph', function(req, res, next) { //welcome Page have to do this one yet
+    var resultArray = [];
+    mongodb.connect(url,function(err, db){
+      assert.equal(null, err);
+      var cursor = db.collection('Results').find();
+      cursor.forEach(function(doc, err){
+        assert.equal(null, err);
+        resultArray.push(doc);
+      }, function(){
+        db.close();
+        res.render('D1graph',{items: resultArray});
+      });
+    });
+});
 
 var userDataSchema = new Schema({
   event: {type: String, required: true},
