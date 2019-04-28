@@ -1,15 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="/stylesheets/stylee.css">
   <link rel="stylesheet" href="/stylesheets/style.css">
+
 </head>
 <body>
-
-  <p2 id="time"></p2>
+  <h1>OEE TECT</h1>
+  <ul>
+  	<li><a href="/">Home</a></li> <!--works-->
+    <li class="dropdown">
+      <a>Insert</a>
+      <div class="dropdown-content">
+        <a href="/enterD1">Insert D1</a>
+        <a href="/enterD2">Insert D2</a>
+        <a href="/enterE1">Insert E1</a>
+        <a href="/enterE2">Insert E2</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a>Data</a>
+      <div class="dropdown-content">
+        <a href="/getD1">Data D1</a>
+        <a href="/getD2">Data D2</a>
+        <a href="/getE1">Data E1</a>
+        <a href="/getE2">Data E2</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a>Graphs</a>
+      <div class="dropdown-content">
+        <a href="/graph">Total </a>
+        <a href="/mechanical">Mechanical</a>
+        <a href="/cip">CIP</a>
+        <a href="/ListChange">List Change</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a>User</a>
+      <div class="dropdown-content">
+        <a href="/user/signup">Sign-Up</a>
+        <a href="/user/signin">Sign-In</a>
+      </div>
+    </li>
+    <li id="time"></li>
+  </ul>
+  <br>
+  <br>
+  
     {{{ body }}}
-
  <script>
   var myVar = setInterval(myTimer, 1000);
   function myTimer()
@@ -18,7 +58,6 @@
     document.getElementById("time").innerHTML = d.toLocaleTimeString();
   }
 </script>
-
 <h4> Software Electronic Engineering Project 2018 </h4>
 </body>
 </html>

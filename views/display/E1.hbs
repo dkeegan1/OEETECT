@@ -1,10 +1,5 @@
-<h1>OEE TECT</h1>
-<form action="/Welcome" method="get">
-<button type="submit"> HOME</button>
-</form>
-
-
-
+<br>
+<br>
 <section class="get">
     <h3>Display data from database </h3>
     <form action="/getE1" method="get">
@@ -37,7 +32,7 @@
   </div>
 </form>
 </section>
-</section>
+<button onclick="exportTableToExcel('tblData', 'Evaporator1')">Export To Excel File</button>
 <section class="delete">
   <h3>Delete Data</h3>
     <form action="/delete" method="post">
@@ -48,7 +43,6 @@
       <button type="submit" onclick="alert('Entry Deleted')"> DELETE</button>
     </form>
 </section>
-<button onclick="exportTableToExcel('tblData', 'Evaporator1')">Export Table Data To Excel File</button>
 <script>
 function exportTableToExcel(tableID, filename = ''){
     var downloadLink;
