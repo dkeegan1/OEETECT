@@ -40,15 +40,19 @@
     <li class="dropdown">
       <a>User</a>
       <div class="dropdown-content">
+        {{# if login}}
+          <a href="/user/logout">logout</a>
+        {{else}}
         <a href="/user/signup">Sign-Up</a>
         <a href="/user/signin">Sign-In</a>
+        {{/if}}
       </div>
     </li>
     <li id="time"></li>
   </ul>
   <br>
   <br>
-  
+
     {{{ body }}}
  <script>
   var myVar = setInterval(myTimer, 1000);

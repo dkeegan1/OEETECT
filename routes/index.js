@@ -63,7 +63,7 @@ var sumDuration = (db, callback) => {
 });*/
 
 
-router.get('/graph', function(req, res, next) { //welcome Page have to do this one yet
+router.get('/graph', isLoggedIn, function(req, res, next) { //welcome Page have to do this one yet
     var resultArray = [];
     mongodb.connect(url,function(err, db){
       assert.equal(null, err);
@@ -77,7 +77,7 @@ router.get('/graph', function(req, res, next) { //welcome Page have to do this o
       });
     });
 });
-router.get('/mechanical', function(req, res, next) { //welcome Page have to do this one yet
+router.get('/mechanical', isLoggedIn, function(req, res, next) { //welcome Page have to do this one yet
     var resultArray = [];
     mongodb.connect(url,function(err, db){
       assert.equal(null, err);
@@ -91,7 +91,7 @@ router.get('/mechanical', function(req, res, next) { //welcome Page have to do t
       });
     });
 });
-router.get('/cip', function(req, res, next) { //welcome Page have to do this one yet
+router.get('/cip', isLoggedIn, function(req, res, next) { //welcome Page have to do this one yet
     var resultArray = [];
     mongodb.connect(url,function(err, db){
       assert.equal(null, err);
@@ -105,7 +105,7 @@ router.get('/cip', function(req, res, next) { //welcome Page have to do this one
       });
     });
 });
-router.get('/ListChange', function(req, res, next) { //welcome Page have to do this one yet
+router.get('/ListChange', isLoggedIn, function(req, res, next) { //welcome Page have to do this one yet
     var resultArray = [];
     mongodb.connect(url,function(err, db){
       assert.equal(null, err);
@@ -119,7 +119,7 @@ router.get('/ListChange', function(req, res, next) { //welcome Page have to do t
       });
     });
 });
-router.get('/Scheduale', function(req, res, next) { //welcome Page have to do this one yet
+router.get('/Scheduale', isLoggedIn, function(req, res, next) { //welcome Page have to do this one yet
     var resultArray = [];
     mongodb.connect(url,function(err, db){
       assert.equal(null, err);
@@ -157,7 +157,7 @@ router.get('/user/signup', function(req, res, next) { //Login Page
   res.render('user/signup', {csrfToken: req.csrfToken(), messages:messages});
 });
 router.post('/user/signup',passport.authenticate('local.signup',{
-  successRedirect: '/Welcome',
+  successRedirect: '/',
   failureRedirect: '/user/signup',
   failureFlash: true
 }));
@@ -167,21 +167,21 @@ router.get('/user/signin', function(req, res, next) { //Login Page
   res.render('user/signin', {csrfToken: req.csrfToken(), messages:messages});
 });
 router.post('/user/signin',passport.authenticate('local.signin',{
-  successRedirect: '/Welcome',
+  successRedirect: '/',
   failureRedirect: '/user/signin',
   failureFlash: true
 }));
 
-router.get('/user/logout', function(req, res, next) { //Login Page
+router.get('/user/logout',isLoggedIn, function(req, res, next) { //Login Page
   req.logout();
-  res.redirect('user/signin');
+  res.redirect('/');
 });
 
 router.get('/', function(req, res, next) { //Login Page
   res.render('Wel');
 });
 
-router.get('/enterD1', function(req, res, next) {
+router.get('/enterD1',isLoggedIn,function(req, res, next) {
    //Insert Page
   res.render('insert/Dryer1');
 });
@@ -189,33 +189,33 @@ router.get('/enterD1', function(req, res, next) {
 router.get('/enterD2', isLoggedIn, function(req, res, next) { //Insert Page
   res.render('insert/Dryer2');
 });
-router.get('/enterE1', function(req, res, next) { //Insert Page
+router.get('/enterE1', isLoggedIn, function(req, res, next) { //Insert Page
   res.render('insert/Evap1');
 });
-router.get('/enterE2', function(req, res, next) { //Insert Page
+router.get('/enterE2', isLoggedIn, function(req, res, next) { //Insert Page
   res.render('insert/Evap2');
 });
-router.get('/getD1', function(req, res, next) { //Get Data Page
+router.get('/getD1', isLoggedIn, function(req, res, next) { //Get Data Page
   Dryer1.find()
       .then(function(doc) {
         res.render('display/D1', {items: doc});
       });
 });
-router.get('/getD2', function(req, res, next) { //Get Data Page
+router.get('/getD2', isLoggedIn, function(req, res, next) { //Get Data Page
   Dryer2.find()
       .then(function(doc) {
         res.render('display/D2', {items: doc});
       });
     });
 
-router.get('/getE1', function(req, res, next) { //Get Data Page
+router.get('/getE1', isLoggedIn, function(req, res, next) { //Get Data Page
   Evap1.find()
       .then(function(doc) {
         res.render('display/E1', {items: doc});
       });
     });
 
-router.get('/getE2', function(req, res, next) { //Get Data Page
+router.get('/getE2', isLoggedIn, function(req, res, next) { //Get Data Page
   Evap2.find()
       .then(function(doc) {
         res.render('display/E2', {items: doc});
@@ -288,7 +288,7 @@ router.post('/delete', function(req, res, next) {
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) { //Authenticated is added by passport.
         return next();
     }
     res.redirect('/'); //starting page
