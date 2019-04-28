@@ -7,4 +7,5 @@ Website is now styled correctly.
 Login ans Sign up are working correctly.
 User Authentication added so user must loginin before entering and retrieving data.
 Project Functionality Completed.
+Project Completed.
 

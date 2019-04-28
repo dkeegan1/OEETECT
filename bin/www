@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('05-express-first-app:server');
+var debug = require('debug')('OEE-TECT-Project:server');
 var http = require('http');
 
 /**
