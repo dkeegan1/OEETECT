@@ -37,31 +37,9 @@ var sumDuration = (db, callback) => {
     assert.equal(err, null);
  });
  var cursor = db.collection('dryer1').aggregate(Scheduale).toArray( (err, res) => {
-   console.log(res);
     assert.equal(err, null);
  });
 };
-
-/*MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  var dbo = db.db("test");
-  dbo.collection('Results').aggregate([
-    { $lookup:
-       {
-         from: 'Mechanical',
-         localField: '_id',
-         foreignField: 'total',
-         as: 'Added'
-       }
-     }
-
-    ]).toArray(function(err, res) {
-    if (err) throw err;
-    console.log(JSON.stringify(res));
-    db.close();
-  });
-});*/
-
 
 router.get('/graph', isLoggedIn, function(req, res, next) { //welcome Page have to do this one yet
     var resultArray = [];
@@ -134,7 +112,6 @@ router.get('/Scheduale', isLoggedIn, function(req, res, next) { //welcome Page h
     });
 });
 
-
 var userDataSchema = new Schema({
   event: {type: String, required: true},
   startdate: String,
@@ -150,11 +127,11 @@ var Dryer2 = mongoose.model('Dryer2', userDataSchema);
 var Evap1 = mongoose.model('Evapartor1', userDataSchema);
 var Evap2 = mongoose.model('Evapartor2', userDataSchema);
 
-router.use(csrfProtection);
+//router.use(csrfProtection);
 
 router.get('/user/signup', function(req, res, next) { //Login Page
   var messages = req.flash('error');
-  res.render('user/signup', {csrfToken: req.csrfToken(), messages:messages});
+  res.render('user/signup');
 });
 router.post('/user/signup',passport.authenticate('local.signup',{
   successRedirect: '/',
@@ -164,7 +141,7 @@ router.post('/user/signup',passport.authenticate('local.signup',{
 
 router.get('/user/signin', function(req, res, next) { //Login Page
   var messages = req.flash('error');
-  res.render('user/signin', {csrfToken: req.csrfToken(), messages:messages});
+  res.render('user/signin');
 });
 router.post('/user/signin',passport.authenticate('local.signin',{
   successRedirect: '/',
@@ -214,14 +191,13 @@ router.get('/getE1', isLoggedIn, function(req, res, next) { //Get Data Page
         res.render('display/E1', {items: doc});
       });
     });
-
 router.get('/getE2', isLoggedIn, function(req, res, next) { //Get Data Page
   Evap2.find()
       .then(function(doc) {
         res.render('display/E2', {items: doc});
       });
     });
-router.post('/insertD1', function(req, res, next) {
+router.post('/insertD1',isLoggedIn, function(req, res, next) {
   var item = {
     event : req.body.event,
     startdate : req.body.startdate,
@@ -233,7 +209,8 @@ router.post('/insertD1', function(req, res, next) {
   };
   var data = new Dryer1(item);
   data.save();
-  res.redirect('/Welcome');
+  var messages = req.flash('error');
+  res.redirect('/');
 });
 router.post('/insertD2', function(req, res, next) {
   var item = {
@@ -247,7 +224,7 @@ router.post('/insertD2', function(req, res, next) {
   };
   var data = new Dryer2(item);
   data.save();
-  res.redirect('/Welcome');
+  res.redirect('/');
 });
 router.post('/insertE1', function(req, res, next) {
   var item = {
@@ -261,7 +238,7 @@ router.post('/insertE1', function(req, res, next) {
   };
   var data = new Evap1(item);
   data.save();
-  res.redirect('/Welcome');
+  res.redirect('/');
 });
 router.post('/insertE2', function(req, res, next) {
   var item = {
@@ -275,7 +252,7 @@ router.post('/insertE2', function(req, res, next) {
   };
   var data = new Evap2(item);
   data.save();
-  res.redirect('/Welcome');
+  res.redirect('/');
 });
 router.post('/delete', function(req, res, next) {
   var id = req.body.id;
@@ -283,7 +260,7 @@ router.post('/delete', function(req, res, next) {
   Dryer2.findByIdAndRemove(id).exec();
   Evap1.findByIdAndRemove(id).exec();
   Evap2.findByIdAndRemove(id).exec();
-  res.redirect('/Welcome');
+  res.redirect('/');
 });
 module.exports = router;
 
